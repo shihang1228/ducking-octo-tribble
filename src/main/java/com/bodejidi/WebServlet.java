@@ -18,6 +18,8 @@ public class WebServlet extends HttpServlet
 		//resp.setContentType("text/html; charset=UTF-8");
 		Connection conn = null;
 		Statement stmt = null;
+		String firstName = req.getParameter("first_name");
+		String lastName = req.getParameter("last_name");
 		//resp.getWriter().println("    " + firstName + "  " + lastName );
 		try
        	{
@@ -25,6 +27,22 @@ public class WebServlet extends HttpServlet
 			conn = DriverManager.getConnection("jdbc:mysql://localhost/test?"
 												+ "user=root" + "&password=");
 			resp.getWriter().println("Connect data base success");
+		}
+		catch (Exception ex)
+       	{
+            
+       	}
+		
+		try
+		{
+			stmt = conn.createStatement();
+			
+			
+				String sql = "INSERT INTO member(first_name, last_name, date_created, last_updated) " 
+						   + "VALUES('" + firstName + "', '" + lastName + "', now(), now());";
+				stmt.executeUpdate(sql);
+				resp.getWriter().println( "add  " + firstName + "   " +  lastName + "  success");
+			
 		}
 		catch (Exception ex)
        	{
